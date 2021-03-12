@@ -12,5 +12,4 @@ class PersonCell: UICollectionViewCell {
     // MARK: - IBOutlets, Custom Variables
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var name: UILabel!
-    
 }
