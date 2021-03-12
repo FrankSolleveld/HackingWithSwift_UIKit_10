@@ -5,6 +5,14 @@
 //  Created by Frank Solleveld on 11/03/2021.
 //
 
+/*
+ CHALLENGE TIME
+ 0. Fix the bug
+ 1. Show a UIAlertController when the user taps a picture, asking whether they want to rename the person or delete them.
+ 2. Tru using picker.sourceType = .camera when creating your image picker, which will create a new image by taking a photo.
+ 3. Modify project 1 so that it uses a collection view controller rather than a table view controller.
+ */
+
 import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
