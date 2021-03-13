@@ -5,12 +5,6 @@
 //  Created by Frank Solleveld on 11/03/2021.
 //
 
-/*
- CHALLENGE TIME
- 2. Try using picker.sourceType = .camera when creating your image picker, which will create a new image by taking a photo.
- 3. Modify project 1 so that it uses a collection view controller rather than a table view controller.
- */
-
 import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -27,6 +21,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     // MARK: - Custom Methods
     @objc func addNewPerson() {
         let picker = UIImagePickerController()
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        }
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)
