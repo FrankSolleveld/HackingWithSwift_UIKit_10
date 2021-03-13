@@ -7,8 +7,7 @@
 
 /*
  CHALLENGE TIME
- 1. Show a UIAlertController when the user taps a picture, asking whether they want to rename the person or delete them.
- 2. Tru using picker.sourceType = .camera when creating your image picker, which will create a new image by taking a photo.
+ 2. Try using picker.sourceType = .camera when creating your image picker, which will create a new image by taking a photo.
  3. Modify project 1 so that it uses a collection view controller rather than a table view controller.
  */
 
@@ -38,6 +37,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         return paths[0]
     }
     
+    func showRenamingAlert(person: Person) {
+        let ac = UIAlertController(title:"Rename person", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self, weak ac] _ in
+            guard let newName = ac?.textFields?[0].text else { return }
+            person.name = newName
+            self?.collectionView.reloadData()
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+    }
+    
     // MARK: - Delegate Methods
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return people.count
@@ -65,7 +76,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         if let jpegData = image.jpegData(compressionQuality: 1) {
             try? jpegData.write(to: imagePath)
         }
-        let person = Person(name: "Unknown", image: imageName)
+        let person = Person(name: "Kees", image: imageName)
         people.append(person)
         collectionView.reloadData()
         dismiss(animated: true)
@@ -73,11 +84,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let person = people[indexPath.item]
-        let ac = UIAlertController(title:"Rename person", message: nil, preferredStyle: .alert)
-        ac.addTextField()
-        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self, weak ac] _ in
-            guard let newName = ac?.textFields?[0].text else { return }
-            person.name = newName
+        let ac = UIAlertController(title:"Do you want to rename or delete?", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Rename", style: .default, handler: { [weak self] _ in
+            self?.showRenamingAlert(person: person)
+        }))
+        ac.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            self?.people.remove(at: indexPath.item)
             self?.collectionView.reloadData()
         }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
