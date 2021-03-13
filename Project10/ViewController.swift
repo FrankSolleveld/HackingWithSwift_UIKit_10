@@ -7,7 +7,6 @@
 
 /*
  CHALLENGE TIME
- 0. Fix the bug
  1. Show a UIAlertController when the user taps a picture, asking whether they want to rename the person or delete them.
  2. Tru using picker.sourceType = .camera when creating your image picker, which will create a new image by taking a photo.
  3. Modify project 1 so that it uses a collection view controller rather than a table view controller.
@@ -75,6 +74,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let person = people[indexPath.item]
         let ac = UIAlertController(title:"Rename person", message: nil, preferredStyle: .alert)
+        ac.addTextField()
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self, weak ac] _ in
             guard let newName = ac?.textFields?[0].text else { return }
             person.name = newName
